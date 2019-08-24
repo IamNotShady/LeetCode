@@ -1,4 +1,4 @@
-package com.blankj.medium._554;
+package com.github.medium._554;
 
 import java.util.ArrayList;
 import java.util.Arrays;

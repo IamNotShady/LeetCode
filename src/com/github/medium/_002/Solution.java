@@ -1,6 +1,6 @@
-package com.blankj.medium._002;
+package com.github.medium._002;
 
-import com.blankj.structure.ListNode;
+import com.github.structure.ListNode;
 
 /**
  * <pre>

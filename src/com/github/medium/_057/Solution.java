@@ -1,6 +1,6 @@
-package com.blankj.medium._057;
+package com.github.medium._057;
 
-import com.blankj.structure.Interval;
+import com.github.structure.Interval;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,6 +1,6 @@
-package com.blankj.hard._023;
+package com.github.hard._023;
 
-import com.blankj.structure.ListNode;
+import com.github.structure.ListNode;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;

@@ -1,4 +1,4 @@
-package com.blankj.medium._016;
+package com.github.medium._016;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package com.blankj.easy._028;
+package com.github.easy._028;
 
 /**
  * <pre>

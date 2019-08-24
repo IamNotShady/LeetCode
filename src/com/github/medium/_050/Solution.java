@@ -1,4 +1,4 @@
-package com.blankj.medium._050;
+package com.github.medium._050;
 
 /**
  * <pre>

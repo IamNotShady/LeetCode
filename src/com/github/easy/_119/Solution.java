@@ -1,4 +1,4 @@
-package com.blankj.easy._119;
+package com.github.easy._119;
 
 
 import java.util.ArrayList;

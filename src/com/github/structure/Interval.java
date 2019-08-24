@@ -1,4 +1,4 @@
-package com.blankj.structure;
+package com.github.structure;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.blankj.structure;
+package com.github.structure;
 
 /**
  * <pre>

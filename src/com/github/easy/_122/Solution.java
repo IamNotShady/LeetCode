@@ -1,4 +1,4 @@
-package com.blankj.easy._122;
+package com.github.easy._122;
 
 
 /**

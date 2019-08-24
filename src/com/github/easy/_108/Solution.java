@@ -1,7 +1,7 @@
-package com.blankj.easy._108;
+package com.github.easy._108;
 
 
-import com.blankj.structure.TreeNode;
+import com.github.structure.TreeNode;
 
 /**
  * <pre>

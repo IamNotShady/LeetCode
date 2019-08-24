@@ -1,6 +1,6 @@
-package com.blankj.easy._021;
+package com.github.easy._021;
 
-import com.blankj.structure.ListNode;
+import com.github.structure.ListNode;
 
 /**
  * <pre>

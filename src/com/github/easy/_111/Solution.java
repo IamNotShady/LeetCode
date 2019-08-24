@@ -1,7 +1,7 @@
-package com.blankj.easy._111;
+package com.github.easy._111;
 
 
-import com.blankj.structure.TreeNode;
+import com.github.structure.TreeNode;
 
 import java.util.LinkedList;
 

@@ -1,4 +1,4 @@
-package com.blankj.hard._010;
+package com.github.hard._010;
 
 /**
  * <pre>
