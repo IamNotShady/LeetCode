@@ -1,5 +1,6 @@
 package com.github.leetcode;
 
+
 import java.util.*;
 
 import com.github.structure.ListNode;
@@ -457,7 +458,26 @@ public class LeetCode {
 
     // https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/
     public int minDepth(TreeNode root) {
-
+        if (null == root) return 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        Map<TreeNode,Integer> map = new HashMap<>();
+        map.put(root,1);
+        while (null != queue.peek()) {
+            TreeNode node = queue.poll();
+            if (node.left == null && node.right == null) {
+                return map.get(node);
+            }
+            if (null != node.left) {
+                map.put(node.left,map.get(node)+1);
+                queue.offer(node.left);
+            }
+            if (null != node.right) {
+                map.put(node.right,map.get(node)+1);
+                queue.offer(node.right);
+            }
+        }
+        return 0;
     }
 
 
