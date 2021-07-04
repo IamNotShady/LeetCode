@@ -1,15 +1,11 @@
 package com.github.mine;
 
-import java.security.PublicKey;
 import java.util.*;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.github.structure.ListNode;
-import com.sun.org.apache.bcel.internal.generic.NEW;
+import com.github.structure.TreeNode;
 
-import jdk.internal.org.objectweb.asm.tree.LineNumberNode;
-
-public class offer {
+public class OfferEasy {
 
     public static void main(String[] args) {
 //        System.out.println(964632435 * 10);
@@ -44,7 +40,8 @@ public class offer {
 //        lowestCommonAncestor(tmp,new TreeNode(48),new TreeNode(-71));
 //        TreeNode root =  createTreeNode(new Integer[]{1,2,2,null,3,null,3});
 //        System.out.println(isSymmetric(root));
-          insertionSort(new int[]{4,5,6,1,3,2},5);
+//          insertionSort(new int[]{4,5,6,1,3,2},5);
+//          quickSort(new int[]{4,5,6,1,3,2},0,5);
     }
 
     public String reverseLeftWords(String s, int n) {
@@ -87,18 +84,7 @@ public class offer {
         return (int) tmp;
     }
 
-
-    public static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
-        }
-    }
-
-
+    // https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/submissions/
     public static int maxDepth(TreeNode root) {
         if (root == null) return 0;
         return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
@@ -206,7 +192,7 @@ public class offer {
         return res;
     }
 
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         if (l1 == null) return l2;
         if (l2 == null) return l1;
         ListNode node = new ListNode(0);
@@ -221,8 +207,8 @@ public class offer {
             }
             curr = curr.next;
         }
-        curr.next = l1 == null ? l1 : l1;
-        return node;
+        curr.next = l1 == null ? l2 : l1;
+        return node.next;
     }
 
     class CQueue {
@@ -297,17 +283,19 @@ public class offer {
         return (includeTwoNode(root.left,node)||includeTwoNode(root.right,node));
     }
 
+    // https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/
+    // 二叉树的最近公共祖先
     class Solution {
-        public Map<Integer,TreeNode> allNode = new HashMap<>();
+        public Map<Integer,TreeNode> parent = new HashMap<>();
         public Set<Integer> visited = new HashSet<>();
 
         public void dfs(TreeNode node) {
             if (node.left!=null) {
-                allNode.put(node.left.val,node);
+                parent.put(node.left.val,node);
                 dfs(node.left);
             }
             if (node.right != null) {
-                allNode.put(node.right.val,node);
+                parent.put(node.right.val,node);
                 dfs(node.right);
             }
         }
@@ -316,13 +304,13 @@ public class offer {
             dfs(root);
             while (p != null) {
                 visited.add(p.val);
-                p = allNode.get(p.val);
+                p = parent.get(p.val);
             }
             while (q != null) {
                 if (visited.contains(q.val)) {
                     return q;
                 }
-                q = allNode.get(q.val);
+                q = parent.get(q.val);
             }
             return null;
         }
@@ -509,61 +497,160 @@ public class offer {
         return true;
     }
 
+    public static void swap(int[] arr,int i,int j) {
+        int n = arr[i];
+        arr[i] = arr[j];
+        arr[j] = n;
+    }
 
-    // 插入排序，a表示数组，n表示数组大小
-    public static void insertionSort(int[] a, int n) {
-        if (n <= 1) return;
-        for (int i = 1; i < n; ++i) {
-            int value = a[i];
-            int j = i - 1;
-            // 查找插入的位置
-            for (; j >= 0; --j) {
-                if (a[j] > value) {
-                    a[j+1] = a[j];  // 数据移动
+    public int search(int[] nums, int target) {
+        int l = 0;
+        int r = nums.length-1;
+        while (l<=r) {
+            int mid = (l+r)/2;
+            if (nums[mid] == target) return mid;
+            if (nums[l] <=nums[mid]) {
+                if (target>=nums[l] && target<nums[mid]) {
+                    r = mid-1;
                 } else {
-                    break;
+                    l = mid+1;
+                }
+            } else {
+                if (target>nums[mid] && target<=nums[r]) {
+                    l = mid+1;
+                } else {
+                    r = mid-1;
                 }
             }
-            a[j+1] = value; // 插入数据
         }
+
+        return -1;
     }
 
-    // 归并排序
-    public static void mergeSort(int[] arr, int low, int high){
-        if (low<high){
-            int mid = (low+high)/2;
-            mergeSort(arr,low,mid);
-            mergeSort(arr,mid+1,high);
-            merge(arr,low,mid,high);
-        }
-    }
+    class MinStack {
 
-    public static void merge(int[] arr,int low,int mid,int high) {
-        int[] tmp = new int[high-low+1];
-        int i = low;
-        int j = mid+1;
-        int k = 0;
-        for (;i<=mid&&j<=high;++k) {
-            if (arr[i]<=arr[j]){
-                tmp[k] = arr[i++];
-            } else {
-                tmp[k] = arr[j++];
+        Stack<Integer> A,B;
+
+        /** initialize your data structure here. */
+        public MinStack() {
+            A = new Stack<>();
+            B = new Stack<>();
+        }
+
+        public void push(int x) {
+            A.push(x);
+            if (B.isEmpty() || B.peek()>=x){
+                B.push(x);
             }
         }
-        while (i<=mid){
-            tmp[k++] = arr[i++];
+
+        public void pop() {
+            int x = A.pop();
+            if (x == B.peek()) {
+                B.pop();
+            }
         }
-        while (j<=high) {
-            tmp[k++] = arr[j++];
+
+        public int top() {
+            return A.peek();
         }
-        for (int n =0;n<tmp.length;n++) {
-            arr[low+n] = tmp[n];
+
+        public int min() {
+            return B.peek();
         }
     }
-    //快速排序
-    public static void quickSort(int[] arr,int low,int high) {
+
+    public int[] getLeastNumbers(int[] arr, int k) {
+        int[] vec = new int[k];
         Arrays.sort(arr);
+        for (int i = 0; i < k; ++i) {
+            vec[i] = arr[i];
+        }
+        return vec;
     }
+
+    public int search1(int[] nums, int target) {
+        return helper(nums,target)-helper(nums,target-1);
+    }
+
+    public int helper(int[] nums, int target) {
+        int i = 0, j = nums.length - 1;
+        while (i<=j) {
+            int mid = (i+j)/2;
+            if(nums[mid]<=target) i = mid+1;
+            else j = mid -1;
+        }
+        return i;
+    }
+
+    public int minArray(int[] nums) {
+        int l = 0;
+        int r = nums.length-1;
+        while (l<=r) {
+            int mid = (l+r)/2;
+            if (nums[mid] > nums[r]) {
+                l= mid+1;
+            } else if (nums[mid] < nums[r]) {
+                r = mid;
+            } else {
+                --r;
+            }
+        }
+        return nums[l];
+    }
+
+    public int missingNumber(int[] nums) {
+        int l = 0;
+        int r = nums.length -1;
+        while (l<=r) {
+            int mid = (l+r)/2;
+            if (nums[mid] == mid) {
+                l = mid+1;
+            } else {
+                r = mid-1;
+            }
+        }
+        return l;
+    }
+
+    public String reverseWords(String s) {
+        String[] strs = s.trim().split(" "); // 删除首尾空格，分割字符串
+        StringBuilder res = new StringBuilder();
+        for(int i = strs.length - 1; i >= 0; i--) { // 倒序遍历单词列表
+            if(strs[i].equals("")) continue; // 遇到空单词则跳过
+            res.append(strs[i] + " "); // 将单词拼接至 StringBuilder
+        }
+        return res.toString().trim(); // 转化为字符串，删除尾部空格，并返回
+
+    }
+
+    public int maxProfit(int[] prices) {
+        int minprice = Integer.MAX_VALUE;
+        int maxprofit = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] < minprice) {
+                minprice = prices[i];
+            } else if (prices[i] - minprice > maxprofit) {
+                maxprofit = prices[i] - minprice;
+            }
+        }
+        return maxprofit;
+    }
+
+    public boolean validateStackSequences(int[] pushed, int[] popped) {
+        Stack<Integer> stack = new Stack<>();
+        int n = 0;
+        for (int i : pushed) {
+            stack.push(i);
+            while (!stack.isEmpty() && stack.peek() == popped[n]) {
+                stack.pop();
+                ++n;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+
 
 
 }
